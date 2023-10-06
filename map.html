@@ -49,14 +49,14 @@
                         "lookup": "properties.NAME",
                         "from": {
                             "data": {
-                            "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/data/covid_10_10_2020.csv"
+                            "url": "https://raw.githubusercontent.com/The99thCourier/fit3179_visualisation_2/main/data/Final.json"
                             },
-                            "key": "Country",
-                            "fields": ["Active", "Confirmed", "Population"]
+                            "key": "Entity",
+                            "fields": ["Internet_Users"]
                         }
                         },
                         {
-                        "calculate": "datum.Confirmed/datum.Population * 10000",
+                        "calculate": "datum.Internet_Users",
                         "as": "Confirmed per 10,000 population"
                         }
                     ],
@@ -67,7 +67,7 @@
                         "type": "quantitative",
                         "scale": {
                             "type": "threshold",
-                            "domain": [1, 10, 100],
+                            "domain": [0, 10, 100],
                             "range": ["#e596ff", "#ac45ff", "#8d00ff", "#34005c"]
                         }
                         },
