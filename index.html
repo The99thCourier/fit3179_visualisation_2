@@ -29,18 +29,18 @@
                     "height": "400",
                     "projection": {"type": "equalEarth", "rotate": [-150, 0, 0]},
 
-                    "params" : [
-                        {
-                            "name" : "year",
-                            "value" : 2020,
-                            "bind" : {
-                                "input" : "range",
-                                "min" : 1980,
-                                "max" : 2020,
-                                "step" : 1
-                            }
-                        }
-                    ],
+                    // "params" : [
+                    //     {
+                    //         "name" : "year",
+                    //         "value" : 2020,
+                    //         "bind" : {
+                    //             "input" : "range",
+                    //             "min" : 1980,
+                    //             "max" : 2020,
+                    //             "step" : 1
+                    //         }
+                    //     }
+                    // ],
                 
                     "data": {
                                 "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson",
@@ -62,7 +62,7 @@
                                         "fields": ["Internet_Users", "Year"]
                                     }
                                 },
-                                {"filter": "datum.Year == year"}
+                                // {"filter": "datum.Year == year"}
                             ],
                     "mark": { "type": "geoshape", "stroke": "black"},
                     "encoding": {
