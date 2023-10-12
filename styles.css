@@ -1,0 +1,31 @@
+body {
+    background-color: rgb(22, 38, 63);
+  }
+  
+  h1 {
+    color: white;
+    font-family: 'Bookman Old Style';
+    text-align: center;
+    font-size: 52px;
+  }
+
+  h2 {
+    color: rgb(22, 38, 63);
+    font-family: 'Bookman Old Style';
+    text-align: left;
+    font-size: 32px;
+  }
+
+  h3 {
+    color: rgb(10, 21, 40);
+    font-family: 'Bookman Old Style';
+    text-align: center;
+    font-size: 26px;
+  }
+  
+  p {
+    font-family: "Garamond";
+    font-size: 20px;
+    text-align: justify
+  }
+  
