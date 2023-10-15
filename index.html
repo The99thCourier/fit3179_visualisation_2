@@ -22,46 +22,71 @@
         </div>
         <div class="container py-5 bg-white">
             <p>
-                Introduction Text.<br>
+                Access to internet varies with both time and country. This is due to developments in technologies for each country, as well as the cost to build access points in order to provide internet to all of a country's citizens Even in this current decade, the variance in access to the internet is still very large. <br>
                 <br>
+                Another aspect to consider is the access to cellular and broadband connections. These connections are made by paying money to subscribe to various services, but likewise with Internet access, not everyone can afford these subscriptions. <br>
+                <br>
+                The 3 visualisations below showcase each country alongside each other on the three statistics.<br>
             </p>
-            <h2>Internet Usage Worldwide In 2020</h2>
+            <h2><br>Internet Usage Worldwide In 2020</h2>
             <p>
                 Let's first begin by looking at the percentage of people that have access to the Internet in the world by differentiating each country from each other.
-                <br>
             </p>
-            <h3>World Map Internet Usage In 2020</h3>
+            <h3>Visualisation 1: World Map Internet Usage In 2020</h3>
             <div id="vis"/>
                 <script>
                     const spec = {
                     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
                     "width": "1065",
-                    "height": "400",
+                    "height": "600",
                     "projection": {"type": "equalEarth", "rotate": [-150, 0, 0]},
-
-                    "params" : [
-                        {
-                            "name" : "year",
-                            "value" : 2020,
-                            "bind" : {
-                                "input" : "range",
-                                "min" : 1980,
-                                "max" : 2020,
-                                "step" : 1
-                            }
-                        }
-                    ],
                 
-                    "data": {
+                    "layer": [
+                        {
+                        "data": {
+                            "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
+                            "format": {"type": "topojson", "feature": "oceans"}
+                        },
+                        "projection": {"type": "equalEarth"},
+                        "mark": {"type": "geoshape", "fill": "lightgray"}
+                        },
+
+                        {
+                            "data": {
+                                "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/WorldMapWithGraticules.topojson",
+                                "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
+                            },
+                            "projection": {"type": "equalEarth"},
+                            "mark": {"type": "geoshape", "fill": null, "stroke": "black"}
+                        },
+
+                        {
+                            "data": {
+                                "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/3_choropleth_map/js/ne_110m_admin_0_countries.topojson",
+                                "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+                            },
+                            "projection": {"type": "equalEarth"},
+                            "transform": [
+                                {
+                                "calculate": "'Data is not available in ' + datum.properties.NAME",
+                                "as": "note"
+                                }
+                            ],
+                            "mark": {"type": "geoshape", "fill": "white", "stroke": "black"},
+                            "encoding": {"tooltip": {"field": "note"}}
+                        },
+
+                        {
+                            "data": {
                                 "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson",
                                 "format": {
                                     "type": "topojson",
                                     "feature": "ne_110m_admin_0_countries"
                                 }
                             },
-                    "mark": {"type": "geoshape", "fill": "lightgrey", "stroke": "black"},
+                            "mark": {"type": "geoshape", "fill": "lightgrey", "stroke": "black"},
 
-                    "transform": [
+                            "transform": [
                                 {
                                     "lookup":"properties.NAME",
                                     "from": {
@@ -71,30 +96,26 @@
                                         "key": "Entity",
                                         "fields": ["Internet_Users", "Year"]
                                     }
-                                },
-                                {"filter": "datum.Year == year"}
+                                }
                             ],
-                    "mark": { "type": "geoshape", "stroke": "black"},
-                    "encoding": {
-                        "color": {
-                            "field": "Internet_Users",
-                            "type": "quantitative",
-                            "scale": {
-                                "type": "linear"
-                            },
-                            "title": "Internet Users in Country (%)"
-                        },
-                        "tooltip": [
-                            {"field": "properties.NAME", "type": "nominal", "title": "Country"},
-                            {"field": "Internet_Users", "type": "quantitative"},
-                            {"field": "Year", "type": "quantitative"},
-                            {
-                                "field": "Internet_Users",
-                                "type": "quantitative",
-                                "format": ".2f"
+                            "projection": {"type": "equalEarth"},
+                            "mark": { "type": "geoshape", "stroke": "black"},
+                            "encoding": {
+                                "color": {
+                                    "field": "Internet_Users",
+                                    "type": "quantitative",
+                                    "scale": {
+                                        "type": "linear"
+                                    },
+                                    "title": "Internet Users in Country (%)"
+                                },
+                                "tooltip": [
+                                    {"field": "properties.NAME", "type": "nominal", "title": "Country"},
+                                    {"field": "Internet_Users", "type": "quantitative", "format": ".2f"}
+                                ]
                             }
-                        ]
-                    },
+                        }
+                    ],
 
                     "config": {}
                 };
@@ -106,11 +127,92 @@
 
         <div class="container py-5 bg-white">
             <p>
-                More Text
-            </p><br>
-            <h2>Broadband vs Cellular Subscriptions</h2>
+                You can hover over countries to view their details. This includes both the country's name and the percentage of internet users.
+            </p>
+            <h2><br>Comparing Different Countries With Time</h2>
             <p>
-                Where previous map above shows the percentage of people with Internet Access throughout the world, The graph below shows the distribution of the countries and their years in terms of three properties:
+                Taking a deeper look at 25 countries, what if we looked at how more people got access to the internet as time passed.
+                <br><br>
+                If you want a more focused look at any of the countries, click their respective name in the legend.
+            </p>
+        </div>
+
+        <h3>Visualisation 2: % of Internet Users in Different Countries Over The Years (1980 - 2020)</h3>
+            <div id="vis2"/>
+                <script>
+                    const spec2 = {
+                    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+                    "params": [
+                        {
+                            "name": "Country_selected",
+                            "select": {"type": "point", "fields": ["Entity"]},
+                            "bind": "legend"
+                            
+                        }
+                    ],
+
+                    "width": "1065",
+                    "height": "400",
+
+                    "data": {
+                        "url": "https://raw.githubusercontent.com/The99thCourier/fit3179_visualisation_2/main/data/Final.json"
+                    },
+                    "mark": "line",
+
+                    "transform": [{
+                        "filter":
+                        "datum.Entity == 'Australia' || datum.Entity == 'Haiti' || datum.Entity == 'Sweden' || datum.Entity == 'India' || datum.Entity == 'Sri Lanka' || datum.Entity == 'South Africa' || datum.Entity == 'Japan' || datum.Entity == 'Thailand' || datum.Entity == 'United Kingdom' || datum.Entity == 'Samoa' || datum.Entity == 'Saudi Arabia' || datum.Entity == 'Canada' || datum.Entity == 'Brazil' || datum.Entity == 'Mexico' || datum.Entity == 'Greece' || datum.Entity == 'France' || datum.Entity == 'Colombia' || datum.Entity == 'Russia' || datum.Entity == 'Egypt' || datum.Entity == 'Germany' || datum.Entity == 'Grenada' || datum.Entity == 'Iceland' || datum.Entity == 'Iraq' || datum.Entity == 'Italy' || datum.Entity == 'South Korea'"
+                    }],
+
+                    "encoding": {
+                        "x": {
+                            "field": "Year",
+                            "axis": {
+                                "title": "Year",
+                            }
+                        },
+                        "y": {
+                            "field": "Internet_Users",
+                            "type": "quantitative",
+                            "axis": {
+                                "title": "Internet Users in Country (%)",
+                                "tickCount": 20
+                            }
+                        },
+                        "color": {
+                            "field": "Entity"
+                        },
+
+                        "opacity": {
+                            "condition": {"param": "Country_selected", "value": 1},
+                            "value": 0.15
+                        },
+
+                        "tooltip": [
+                        {"field": "Entity", "type": "nominal", "title": "Country"},
+                        {"field": "Internet_Users", "type": "quantitative"},
+                        {"field": "Year", "type": "quantitative"},
+                        {"field": "Internet_Users", "type": "quantitative", "format": ".2f"}
+                        ]
+                    },
+                    "config": {}
+                };
+                    vegaEmbed("#vis2", spec2, {mode: "vega-lite"}).then(console.log).catch(console.warn);
+                </script>
+
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+            </div>
+
+        <div class="container py-5 bg-white">
+            <p>
+                It should be noted that some countries did not have any data. For example, Australia is missing data from 2002 - 2004. However from identifying trends in the data, it is easy to infer what the roundabout percentages were in those years.
+                <br>
+                In General, the percentage of internet users rose with almost all countries as time passed, because technology was slowly developing with time to improve aspects like internet access.
+            </p>
+            <h2><br>Broadband vs Cellular Subscriptions</h2>
+            <p>
+                Where the map in Visualisation 1 shows the percentage of people with Internet Access throughout the world, The graph below shows the distribution of the countries and their years in terms of three properties:
                 <br><br>
                 - Internet Access Percentage<br>
                 - How many people get access to Broadband and Cellular Subscriptions per 100 people
@@ -118,11 +220,10 @@
                 Notice that there are many countries in many years that have more than 100 cellular subscriptions per 100 people. Most likely this is because there are people that are subscribed to multiple cellular subscriptions on different devices. This could mean a lot of people have multiple phones, or they have a phone with more than 1 subscription, such as a domestic and an international one to allow contact with people both interstate and overseas.
                 <br><br>
                 The graph can be zoomed in by creating intervals with the bar down below. Points are considerable congested in the bottom left corner, and this is notably for third-world countries that lack proper internet access.
-                <br>
             </p>
         </div>
 
-        <h3>Dot Plot of Broadband vs Cellular Subscriptions</h3>
+        <h3>Visualisation 3: Dot Plot of Broadband vs Cellular Subscriptions</h3>
         <div id="vis3"/>
         <script>
             const spec3 = {
@@ -184,7 +285,12 @@
 
             vegaEmbed("#vis3", spec3, {mode: "vega-lite"}).then(console.log).catch(console.warn);
         </script>
-            
+        
+        <p>
+            <br><br>
+            To view the data in a table, visit <a href="https://www.kaggle.com/datasets/ashishraut64/internet-users">www.kaggle.com/datasets/ashishraut64/internet-users</a>
+        </p>
+
         </body>
 </html>
 </html>
